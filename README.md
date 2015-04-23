@@ -52,4 +52,5 @@ Basic usage:
 1. Middleware group
 2. Controller maybe not
 3. CORS
+4. Metrics
 [1]:https://github.com/alexmingoia/koa-router
