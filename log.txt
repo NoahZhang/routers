@@ -1,0 +1,85 @@
+
+> routers@1.0.0 test d:\koa\routers
+> node --harmony-generators node_modules/gulp/bin/gulp.js test
+
+[10:57:10] Using gulpfile d:\koa\routers\gulpfile.js
+[10:57:10] Starting 'test'...
+[10:57:10] Finished 'test' after 14 ms
+
+
+  module
+    √ should expose Router
+
+  Route
+    √ supports regular expression route paths (121ms)
+    √ supports named regular express routes (177ms)
+    √ composes multiple callbacks/middlware (169ms)
+    Route#match()
+      √ captures URL path parameters (171ms)
+      √ return orginal path parameters when decodeURIComponent throw error (167ms)
+      √ populates ctx.captures with regexp captures (167ms)
+      √ return orginal ctx.captures when decodeURIComponent throw error (164ms)
+      √ populates ctx.captures with regexp captures include undefiend (166ms)
+      1) should throw friendly error message when handle not exists
+    Route#param()
+      √ composes middleware for param fn (162ms)
+      √ ignores params which are not matched (169ms)
+    Route#url()
+      √ generates route URL
+      √ escapes using encodeURIComponent()
+
+  Router
+    √ creates new router with koa app
+    √ exposes middleware factory
+    √ extends app with router methods
+    √ matches corresponding requests (493ms)
+    √ executes route middleware using `app.context` (165ms)
+    √ does not match after ctx.throw() (175ms)
+    √ supports generators for route middleware (167ms)
+    √ responds to OPTIONS requests (165ms)
+    √ responds with 405 Method Not Allowed (165ms)
+    √ responds with 501 Not Implemented (165ms)
+    √ does not send 405 if route matched but status is 404 (164ms)
+    √ supports custom routing detect path: ctx.routerPath (164ms)
+    Router#[verb]()
+      √ registers route specific to HTTP verb
+      √ enables route chaining
+    Router#all()
+      √ registers route for all HTTP verbs
+    Router#register()
+      √ registers new routes
+    Router#redirect()
+      √ registers redirect routes
+      √ redirects using route names (156ms)
+    Router#url()
+      √ generates URL for given route
+    Router#param()
+      √ runs parameter middleware (167ms)
+      √ runs parameter middleware in order of URL appearance (165ms)
+    Router#opts
+      √ responds with 200 (163ms)
+      √ should allow setting a prefix (175ms)
+      √ responds with 404 when has a trailing slash (171ms)
+    use middleware with opts
+      √ responds with 200 (168ms)
+      √ responds with 404 when has a trailing slash (168ms)
+    Router#middleware()
+      √ should return composed middleware (172ms)
+    If no HEAD method, default to GET
+      √ should default to GET (164ms)
+      √ should work with middleware (167ms)
+    Router#prefix
+      √ should set opts.prefix
+      √ should prefix existing routes
+      √ should prefix regular expressions
+
+
+  45 passing (5s)
+  1 failing
+
+  1) Route Route#match() should throw friendly error message when handle not exists:
+     AssertionError: expected [Function] to throw exception with a message matching 'get `/foo`: `middleware` must be a function, not `undefined`', but got 'get `/foo`: 'middleware` must be a function, not `undefined`'
+      at Context.<anonymous> (d:\koa\routers\test\lib\route.js:178:22)
+
+
+

@@ -1,0 +1,38 @@
+{
+  "name": "routers",
+  "version": "1.0.0",
+  "description": "Using babel enhance koa router.Add namespace and named middleware.",
+  "main": "lib/router.js",
+  "scripts": {
+    "test": "node --harmony-generators node_modules/gulp/bin/gulp.js test",
+    "docs": "node node_modules/gulp/bin/gulp.js docs",
+    "build": "node_modules/.bin/babel -l es6.classes,es6.blockScoping,es6.arrowFunctions,es6.modules dist --out-dir lib --source-maps",
+    "build-watch": "node_modules/.bin/babel dist --out-dir lib --source-maps --watch"
+  },
+  "keywords": [
+    "koa",
+    "middleware",
+    "router"
+  ],
+  "author": "NoahZhang",
+  "license": "MIT",
+  "dependencies": {
+    "concat-regexp": "0.0.6",
+    "debug": "^2.1.3",
+    "http-errors": "^1.3.1",
+    "koa-compose": "^2.3.0",
+    "methods": "^1.1.1",
+    "path-to-regexp": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel": "^5.1.11",
+    "expect.js": "^0.3.1",
+    "gulp": "^3.8.11",
+    "gulp-mocha": "^2.0.0",
+    "jsdoc-to-markdown": "^0.6.3",
+    "koa": "^0.17.0",
+    "mocha": "^2.0.1",
+    "should": "^4.3.0",
+    "supertest": "^0.15.0"
+  }
+}
