@@ -20,6 +20,8 @@ export default class Router{
       'DELETE'
     ];
 
+    this.namedMiddleware = {};
+
     this.params = {};
     this.stack = {
       middleware: [],
@@ -41,6 +43,23 @@ export default class Router{
         return this;
       }
     });
+  }
+
+  registerMiddleware(name, middleware) {
+    this.namedMiddleware[name] = middleware;
+  }
+
+  group(routeMeta, func) {
+    var routeMeta = routeMeta;
+    var oldPrefix = this.opts.prefix;
+
+    if (routeMeta.prefix) {
+      this.opts.prefix = routeMeta.prefix;
+    }
+
+    func.apply(this);
+
+    this.opts.prefix = oldPrefix;
   }
 
   use(middleware) {
@@ -162,13 +181,24 @@ export default class Router{
   }
 
   register(name, path, methods, middleware) {
-    if(path instanceof Array) {
+    if (path instanceof Array) {
       middleware = Array.prototype.slice.call(arguments, 2);
       methods = path;
       path = name;
       name = null;
     } else {
       middleware = Array.prototype.slice.call(arguments, 3);
+    }
+
+    if(typeof middleware[0] === 'object') {
+      let name = middleware[0].middleware.split('|');
+
+      if(name.length > 0) {
+        middleware.shift();
+        for (let len = name.length, i = len - 1; i >= 0; i--) {
+          middleware.unshift(this.namedMiddleware[name[i]]);
+        }
+      }
     }
 
     var route = new Route(path, methods, middleware, name, this.opts);

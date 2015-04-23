@@ -546,6 +546,46 @@ describe('Router', function() {
         done();
       });
     });
+
+    it('should return named composed middleware', function (done) {
+      var app = koa();
+      var router = new Router();
+      var middlewareCount = 0;
+      var middlewareA = function *(next) {
+        middlewareCount++;
+        yield next;
+      };
+      var middlewareB = function *(next) {
+        middlewareCount++;
+        yield next;
+      };
+
+      router.registerMiddleware("A", middlewareA);
+      router.registerMiddleware("B", middlewareB);
+
+      router.get('/users/:id', {middleware: 'A|B'}, function *() {
+        should.exist(this.params.id);
+        this.body = { hello: 'world' };
+      });
+
+      var routerMiddleware = router.middleware();
+
+      expect(routerMiddleware).to.be.a('function');
+
+      request(http.createServer(
+        app
+          .use(routerMiddleware)
+          .callback()))
+      .get('/users/1')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) return done(err);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('hello', 'world');
+        expect(middlewareCount).to.equal(2);
+        done();
+      });
+    });
   });
 
   describe('If no HEAD method, default to GET', function() {
@@ -620,5 +660,29 @@ describe('Router', function() {
       expect(route.regexp.source).to.equal('^\\/baz\\/foo\\/bar\\/?$');
       expect(route.regexp.ignoreCase).to.equal(true);
     });
-  })
+
+     it('should prefix group routes', function () {
+      var router = new Router();
+
+      router.group({prefix: '/things/:thing_id'}, function() {
+        router.get('/', function *() {
+          this.body = 'test';
+        });
+
+        router.get('/users/:id', function *() {
+          this.body = 'test';
+        });
+      });
+
+      var route = router.stack.routes[1];
+      var route1 = router.stack.routes[0];
+      expect(route.path).to.equal('/things/:thing_id/users/:id');
+      expect(route.paramNames).to.have.length(2);
+      expect(route.paramNames[0]).to.have.property('name', 'thing_id');
+      expect(route.paramNames[1]).to.have.property('name', 'id');
+      expect(route1.path).to.equal('/things/:thing_id/');
+      expect(route1.paramNames).to.have.length(1);
+      expect(route1.paramNames[0]).to.have.property('name', 'thing_id');
+    });
+  });
 });
