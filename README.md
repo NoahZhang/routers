@@ -27,4 +27,5 @@ Basic usage:
 ## TODO
 1. Middleware group
 2. Controller maybe not
+3. CORS
 [1]:https://github.com/alexmingoia/koa-router
