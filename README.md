@@ -4,6 +4,31 @@ Using babel enhance [koa-router][1].Add namespace and named middleware.
 
 ## Added function
 1. Named middleware
+
+**Example**  
+Basic usage:
+
+```javascript
+ var router = new Router();
+ var middlewareCount = 0;
+ 
+ var middlewareA = function *(next) {
+   middlewareCount++;
+   yield next;
+ };
+ 
+ var middlewareB = function *(next) {
+   middlewareCount++;
+   yield next;
+ };
+
+ router.registerMiddleware("A", middlewareA);
+ router.registerMiddleware("B", middlewareB);
+
+ router.get('/users/:id', {middleware: 'A|B'}, function *() {
+   this.body = { hello: 'world' };
+ });
+```
 2. Route group
 
 **Example**  
