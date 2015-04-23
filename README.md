@@ -5,7 +5,6 @@ Using babel enhance [koa-router][1].Add namespace and named middleware.
 ## Added function
 1.Named middleware
 
-**Example**  
 Basic usage:
 
 ```javascript
@@ -31,7 +30,6 @@ Basic usage:
 ```
 2.Route group
 
-**Example**  
 Basic usage:
 
 ```javascript
