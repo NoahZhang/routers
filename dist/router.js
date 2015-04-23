@@ -9,16 +9,6 @@ export default class Router{
       app = null;
     }
 
-    if(!(this instanceof Router)) {
-      if (app) {
-        var router = new Router(app, opts);
-        app.use(router.allowMethods());
-        return router.routes();
-      } else {
-        return new Router(app, opts);
-      }
-    }
-
     this.opts = opts || {};
     this.methods = this.opts.methods || [
       'HEAD',
