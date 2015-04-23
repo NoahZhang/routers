@@ -3,7 +3,7 @@ routers
 Using babel enhance [koa-router][1].Add namespace and named middleware.
 
 ## Added function
-1. Named middleware
+1.Named middleware
 
 **Example**  
 Basic usage:
@@ -29,7 +29,7 @@ Basic usage:
    this.body = { hello: 'world' };
  });
 ```
-2. Route group
+2.Route group
 
 **Example**  
 Basic usage:
