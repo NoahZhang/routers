@@ -53,4 +53,5 @@ Basic usage:
 2. Controller maybe not
 3. CORS
 4. Metrics
+5. Consul support
 [1]:https://github.com/alexmingoia/koa-router
