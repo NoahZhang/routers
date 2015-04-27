@@ -11,12 +11,12 @@ Basic usage:
 ```javascript
  var router = new Router();
  var middlewareCount = 0;
- 
+
  var middlewareA = function *(next) {
    middlewareCount++;
    yield next;
  };
- 
+
  var middlewareB = function *(next) {
    middlewareCount++;
    yield next;
@@ -47,11 +47,25 @@ Basic usage:
  });
 
 ```
+middleware group
+```javascript
+ var router = new Router();
+
+ router.group({middleware: 'A|B'}, function() {
+   router.get('/', function *() {
+     this.body = 'test';
+   });
+
+   router.get('/users/:id', function *() {
+     this.body = 'test';
+   });
+ });
+
+```
 
 ## TODO
-1. Middleware group
-2. Controller maybe not
-3. CORS
-4. Metrics
-5. Consul support
+1. Controller maybe not
+2. CORS
+3. Metrics
+4. Consul support
 [1]:https://github.com/alexmingoia/koa-router
