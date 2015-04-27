@@ -51,15 +51,19 @@ export default class Router{
 
   group(routeMeta, func) {
     var routeMeta = routeMeta;
-    var oldPrefix = this.opts.prefix;
 
     if (routeMeta.prefix) {
       this.opts.prefix = routeMeta.prefix;
     }
 
+    if (routeMeta.middleware) {
+      this.opts.partialMiddleware = routeMeta.middleware;
+    }
+
     func.apply(this);
 
-    this.opts.prefix = oldPrefix;
+    this.opts.prefix = null;
+    this.opts.partialMiddleware = null;
   }
 
   use(middleware) {
@@ -195,6 +199,16 @@ export default class Router{
 
       if(name.length > 0) {
         middleware.shift();
+        for (let len = name.length, i = len - 1; i >= 0; i--) {
+          middleware.unshift(this.namedMiddleware[name[i]]);
+        }
+      }
+    }
+
+    if(this.opts.partialMiddleware) {
+       let name = this.opts.partialMiddleware.split('|');
+
+      if(name.length > 0) {
         for (let len = name.length, i = len - 1; i >= 0; i--) {
           middleware.unshift(this.namedMiddleware[name[i]]);
         }
