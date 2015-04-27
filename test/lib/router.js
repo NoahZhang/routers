@@ -716,15 +716,15 @@ describe('Router', function() {
         });
       });
 
-      var route = router.stack.routes[1];
       var route1 = router.stack.routes[0];
-      expect(route.path).to.equal('/things/:thing_id/users/:id');
-      expect(route.paramNames).to.have.length(2);
-      expect(route.paramNames[0]).to.have.property('name', 'thing_id');
-      expect(route.paramNames[1]).to.have.property('name', 'id');
+      var route2 = router.stack.routes[1];
       expect(route1.path).to.equal('/things/:thing_id/');
       expect(route1.paramNames).to.have.length(1);
       expect(route1.paramNames[0]).to.have.property('name', 'thing_id');
+      expect(route2.path).to.equal('/things/:thing_id/users/:id');
+      expect(route2.paramNames).to.have.length(2);
+      expect(route2.paramNames[0]).to.have.property('name', 'thing_id');
+      expect(route2.paramNames[1]).to.have.property('name', 'id');
     });
   });
 });
